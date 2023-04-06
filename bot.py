@@ -66,12 +66,18 @@ def run_discord_bot():
         """
         admins_names_match = re.search(autorespond_quest.admins_names, message.content, re.IGNORECASE)
         admins_match = re.search(autorespond_quest.admins, message.content, re.IGNORECASE)
+        converter_match = re.search(autorespond_quest.converter, message.content, re.IGNORECASE)
+        sell_won_match = re.search(autorespond_quest.sell_won, message.content, re.IGNORECASE)
+        issue_match = re.search(autorespond_quest.issue, message.content, re.IGNORECASE)
 
         if admins_names_match or admins_match:
             await message.channel.send(autorespond_quest.admins_ans)
-
-
-
+        elif converter_match:
+            await message.channel.send(autorespond_quest.converter_ans)
+        elif sell_won_match:
+            await message.delete()
+        elif issue_match:
+            await message.channel.send(autorespond_quest.issue_ans)
 
     @client.event
     async def on_message(message):
@@ -93,7 +99,6 @@ def run_discord_bot():
         if message.author == client.user:
             return
 
-
         if user_message.lower() == "hello" or user_message.lower() == "hi":
             await message.channel.send(f'Hello {username}')
             return
@@ -104,6 +109,5 @@ def run_discord_bot():
         # # Respond to commands
         # if message.content.startswith("!roles"):
         #     await on_member_join(message.author)
-
 
     client.run(TOKEN)
