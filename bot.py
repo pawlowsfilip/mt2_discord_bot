@@ -18,7 +18,7 @@ def run_discord_bot():
         """
         print(f'Logged as {client.user}')
 
-    @bot.event
+    @client.event
     async def on_member_join(member):
         """
         This function is called when a new member joins a server where the bot is present.
