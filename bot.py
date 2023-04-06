@@ -50,7 +50,7 @@ def run_discord_bot():
             return
 
         guild = client.get_guild(payload.guild_id)
-        member = guild.get_member(payload.user_id)
+        # member = guild.get_member(payload.user_id)
 
         if payload.emoji.name == '✅':
             role = discord.utils.get(guild.roles, name='Zweryfikowany')
@@ -78,8 +78,8 @@ def run_discord_bot():
             await message.channel.send(f'Hello {username}')
             return
 
-        # Respond to commands
-        if message.content.startswith("!roles"):
-            await on_member_join(message.author)
+        # # Respond to commands
+        # if message.content.startswith("!roles"):
+        #     await on_member_join(message.author)
 
     client.run(TOKEN)
