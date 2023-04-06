@@ -4,10 +4,10 @@ import discord
 import re
 from discord.ext import commands
 from dotenv import load_dotenv
+from config import TOKEN
 
 load_dotenv()
 client = discord.Client()
-token = os.getenv('TOKEN')
 bot = commands.Bot(command_prefix="!")
 
 statue = f'''§1. Każdy użytkownik przebywający na naszym discordzie akceptuje jego regulamin.
@@ -78,4 +78,4 @@ async def on_message(message):
     if message.content.startswith("!roles"):
         await on_member_join(message.author)
 
-client.run(token)
+client.run(TOKEN)
