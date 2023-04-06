@@ -69,6 +69,7 @@ def run_discord_bot():
         converter_match = re.search(autorespond_quest.converter, message.content, re.IGNORECASE)
         sell_won_match = re.search(autorespond_quest.sell_won, message.content, re.IGNORECASE)
         issue_match = re.search(autorespond_quest.issue, message.content, re.IGNORECASE)
+        new_server_match = re.search(autorespond_quest.new_server, message.content, re.IGNORECASE)
 
         if admins_names_match or admins_match:
             await message.channel.send(autorespond_quest.admins_ans)
@@ -78,6 +79,8 @@ def run_discord_bot():
             await message.delete()
         elif issue_match:
             await message.channel.send(autorespond_quest.issue_ans)
+        if new_server_match:
+            await message.channel.send(autorespond_quest.new_server_ans)
 
     @client.event
     async def on_message(message):
