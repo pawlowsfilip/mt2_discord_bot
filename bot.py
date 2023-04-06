@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from config import TOKEN
 from statue import statue
+import re
+import autorespond_quest
 
 
 def run_discord_bot():
@@ -56,6 +58,21 @@ def run_discord_bot():
             role = discord.utils.get(guild.roles, name='Zweryfikowany')
             await payload.member.add_roles(role)
 
+    async def auto_responder(message):
+        """
+        Checks if a message matches a specific pattern and sends a response to the channel if there is a match.
+        :param message: A message object that contains information about the message sent in the channel.
+        :return: None
+        """
+        admins_names_match = re.search(autorespond_quest.admins_names, message.content, re.IGNORECASE)
+        admins_match = re.search(autorespond_quest.admins, message.content, re.IGNORECASE)
+
+        if admins_names_match or admins_match:
+            await message.channel.send(autorespond_quest.admins_ans)
+
+
+
+
     @client.event
     async def on_message(message):
         """
@@ -69,17 +86,24 @@ def run_discord_bot():
         channel = str(message.channel.name)
         user_message = str(message.content)
 
+        # Log to console
         print(f'Message {user_message} by {username} on {channel}')
 
+        # Ignore messages from the bot itself
         if message.author == client.user:
             return
+
 
         if user_message.lower() == "hello" or user_message.lower() == "hi":
             await message.channel.send(f'Hello {username}')
             return
 
+        # Call the auto_responder function
+        await auto_responder(message)
+
         # # Respond to commands
         # if message.content.startswith("!roles"):
         #     await on_member_join(message.author)
+
 
     client.run(TOKEN)
